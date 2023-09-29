@@ -1,0 +1,79 @@
+from IPython.utils.path import get_xdg_cache_dir
+#（-b±√b^2-4ac)/2a
+#用户输入值a,b,c
+a = int(input("输入x^2的系数"))
+b = int(input("输入x的系数"))
+c = int(input("输入x^0的系数"))
+
+doua = a * 2
+#计算根号下的部分
+import math
+rootnumber = (b ** 2) - 4*a*c
+#根的判别式
+if rootnumber < 0:
+        print("无实数根")
+else:
+       square_root = math.sqrt(rootnumber)
+      # print(square_root)
+       try:
+        #开根后整数与非整数判断
+           number = float (square_root)
+
+           if number.is_integer():
+            #若为整数，则输出
+              plus_result = (-b + number) / doua
+              minus_result = (-b - number) / doua
+              #判断解的个数
+              if plus_result ==  minus_result:
+                 print(f"仅有一解，解为{plus_result}")
+              else:
+
+                 print(f"解一为{plus_result}")
+                 print(f"解二为{minus_result}")
+
+           else:
+            #若为小数，则不开根号
+             import math
+
+             def simplify_square_root(Simp_number):
+              sqrt_result = math.sqrt(Simp_number)
+
+              # 寻找可化简的整数因子
+              for factor in range(2, int(sqrt_result) + 1):
+               if Simp_number % (factor * factor) == 0:
+                return (factor, int(Simp_number / (factor * factor)))
+
+              # 如果没有可化简的因子，返回原始数值
+              return (1, Simp_number)
+
+             Simp_number = rootnumber
+             simplified_result = simplify_square_root(Simp_number)
+
+
+
+             import math
+
+             def gcd_of_three_numbers(numbertator,root_numbertator,denominator):
+
+               gcd_a_b = math.gcd(numbertator,root_numbertator)
+               gcd_a_b_c = math.gcd(gcd_a_b,denominator)
+
+               if gcd_a_b_c > 1:
+                 numbertator = numbertator // gcd_a_b_c
+                 root_numbertator = root_numbertator // gcd_a_b_c
+                 denominator = denominator // gcd_a_b_c
+
+               return (numbertator,root_numbertator,denominator)
+
+             numbertator = b
+             root_numbertator = simplified_result[0]
+             denominator = doua
+
+             simplified_fraction = gcd_of_three_numbers(numbertator,root_numbertator,denominator)
+
+
+             print(f"解一为(-{simplified_fraction[0]}+{simplified_fraction[1]}·√{simplified_result[1]})/{simplified_fraction[2]}")
+             print(f"解二为(-{simplified_fraction[0]}-{simplified_fraction[1]}·√{simplified_result[1]})/{simplified_fraction[2]}")
+
+       except ValueError:
+              print("无效输入")
